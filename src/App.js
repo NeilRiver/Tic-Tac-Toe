@@ -40,14 +40,17 @@ if(this.state.xCount >= 3){
 
   render() {
     return (
-      <header className="App-header">
+      <div className="App-container">
+        <header>
+        Tic Tac Toe
+        </header>
         <center>
           {this.state.playingField.map((value, index) => (
             <div onClick={() => this.click(value, index)}>{value}</div>
           ))}
         </center>
-        Tic Tac Toe
-      </header>
+      
+      </div>
     );
   }
 }
