@@ -1,0 +1,30 @@
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+center {
+  display: flex;
+  justify-items: center;
+  flex-wrap: wrap;
+  max-width: 400px;
+  max-height: 400px;
+  margin-bottom: 20px;
+
+  div {
+    border: 3px solid rgb(161, 157, 157);
+    min-width: 120px;
+    min-height: 120px;
+    transition-duration: .4s;
+  }
+
+  div:hover {
+    background: rgba(148, 144, 144, 0.264);
+  }
+}
