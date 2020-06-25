@@ -1,90 +1,58 @@
 import React from "react";
 import "./App.scss";
+import Score from "./components/Score/Score.js";
+import GameArea from "./components/GameArea/GameArea.js";
 
 class App extends React.Component {
   state = {
-    playingField: Array(9).fill(null),
-    xCount: 0,
+    gameField: [],
+    winnerPosition: [],
+    whoWin: [],
+    whoseStep: true, // true - X   false - O
   };
 
-  componentDidUpdate() {
-    if (this.state.xCount >= 5) {
-      let arr = JSON.parse(JSON.stringify(this.state.playingField));
-      let arr2 = [];
-      let arr3 = [];
-
-      for (let i = 0; i < arr.length; i++) {
-        if (i % 3 === 2) {
-          arr2 = [];
-          arr2.push(arr[i - 2], arr[i - 1], arr[i]);
-          if (arr2.every((e, i, a) => e === a[0] && e !== null)) {
-            /* console.log(arr2); */
-            console.log(
-              `комбинация ${arr[i - 2]}[${i - 2}] ${arr[i - 1]}[${i - 1}] ${
-                arr[i]
-              }[${i}]`
-            );
-          }
-
-          arr3 = [];
-          arr3.push(
-            i === 8 ? arr[2] : i === 2 ? arr[0] : arr[1],
-            i === 8 ? arr[5] : i === 2 ? arr[3] : arr[4],
-            i === 8 ? arr[8] : i === 2 ? arr[6] : arr[7]
-          );
-          if (arr3.every((e, i, a) => e === a[0] && e !== null)) {
-            /* console.log(arr2); */
-            console.log(
-              `комбинация ${i === 8 ? arr[2] : i === 2 ? arr[0] : arr[1]}[${
-                i === 8 ? 2 : i === 2 ? 0 : 1
-              }] ${i === 8 ? arr[5] : i === 2 ? arr[3] : arr[4]}[${
-                i === 8 ? 5 : i === 2 ? 3 : 4
-              }] ${i === 8 ? arr[8] : i === 2 ? arr[6] : arr[7]}[${
-                i === 8 ? 8 : i === 2 ? 6 : 7
-              }]`
-            );
-          }
-        }
-      }
-    }
+  componentDidMount() {
+    this.setState({
+      gameField: new Array(9).fill(null),
+      // prettier-ignore
+      whoWin: [0,1,2,
+             3,4,5,
+             6,7,8,
+             0,3,6,
+             1,4,7,
+             2,5,8,
+             0,4,8,
+             2,4,6 ]
+    });
   }
 
-  click(value, index) {
-    let arr = JSON.parse(JSON.stringify(this.state.playingField));
+  clickInfo(indexElment) {
+    let arrCopy = JSON.parse(JSON.stringify(this.state.gameField));
 
-    console.log("value = " + value);
-    console.log("index = " + index);
-    console.log(this.state.xCount);
+    console.log(`index = ${indexElment}`);
+    console.log(arrCopy);
+    console.log(this.state.whoseStep);
 
-    if (value === null) {
-      arr = arr.map((itm, ind) =>
-        ind === index
-          ? this.state.xCount % 2 === 0
-            ? (value = "X")
-            : (value = "O")
-          : itm
-      );
+    this.setState({
+      gameField:arrCopy.map((value,index,array)=>index===indexElment?value=(this.state.whoseStep)?'X':'O':value),
+      whoseStep: !this.state.whoseStep
+    });
 
-      this.setState({
-        playingField: arr,
-        xCount: this.state.xCount + 1,
-      });
-
-      //console.log(this.state.playingField);
-      console.log(arr);
-    } else {
-      console.log("Попытка перезаписать заблокирована");
-    }
   }
 
   render() {
     return (
       <div className="App-container">
-        <header>Tic Tac Toe</header>
+        <header>
+          <Score className="score" labelName="X" winCount="1" />
+          <Score labelName="Tic Tac Toe" />
+          <Score className="score" labelName="O" winCount="2" />
+        </header>
         <center>
-          {this.state.playingField.map((value, index) => (
-            <div onClick={() => this.click(value, index)}>{value}</div>
-          ))}
+          <GameArea
+            gameField={this.state.gameField}
+            clickInfo={this.clickInfo.bind(this)}
+          />
         </center>
       </div>
     );
