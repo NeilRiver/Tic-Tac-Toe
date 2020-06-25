@@ -30,14 +30,19 @@ class App extends React.Component {
     let arrCopy = JSON.parse(JSON.stringify(this.state.gameField));
 
     console.log(`index = ${indexElment}`);
-    console.log(arrCopy);
-    console.log(this.state.whoseStep);
+    console.log(this.state.whoseStep ? "X" : "O");
 
-    this.setState({
-      gameField:arrCopy.map((value,index,array)=>index===indexElment?value=(this.state.whoseStep)?'X':'O':value),
-      whoseStep: !this.state.whoseStep
-    });
-
+    this.setState(
+      {
+        gameField: arrCopy.map((value, index, array) =>
+          index === indexElment
+            ? (value = this.state.whoseStep ? "X" : "O")
+            : value
+        ),
+        whoseStep: !this.state.whoseStep,
+      },
+      () => console.log(this.state.gameField)
+    );
   }
 
   render() {
