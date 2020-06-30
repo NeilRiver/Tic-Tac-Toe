@@ -2,6 +2,8 @@ import React from "react";
 import "./App.scss";
 import Score from "./components/Score/Score.js";
 import GameArea from "./components/GameArea/GameArea.js";
+import WinnerScreen from "./components/WinnerScreen/WinnerScreen.js";
+
 
 class App extends React.Component {
   state = {
@@ -72,8 +74,8 @@ class App extends React.Component {
     this.setState(
       {
         sortPosition: arrSortPos,
-      },
-      () => console.log(this.state.sortPosition)
+      }
+      //  () => console.log(this.state.sortPosition)
     );
   }
 
@@ -89,6 +91,7 @@ class App extends React.Component {
           <Score labelName="Tic Tac Toe" />
           <Score className="score" labelName="O" winCount="2" />
         </header>
+        <WinnerScreen/>
         <center>
           <GameArea
             gameField={this.state.gameField}
