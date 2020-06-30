@@ -21,7 +21,6 @@ class App extends React.Component {
     whoseStep: true, // true - X   false - O
   };
 
-
   clickInfo(indexElment) {
     let arrCopy = JSON.parse(JSON.stringify(this.state.gameField));
 
@@ -37,10 +36,8 @@ class App extends React.Component {
         ),
         whoseStep: !this.state.whoseStep,
       },
-       () =>  this.findWinner(this.state.gameField)
+      () => this.findWinner(this.state.gameField)
     );
-
-   
   }
 
   findWinner(arrCopy) {
@@ -65,8 +62,9 @@ class App extends React.Component {
       arrSortPos.map((value, index, array) =>
         Array.from(new Set(array[index].concat(firstCollection))).length ===
         array[index].length
-          ? console.log(firstCollection, array[index], index === 0 ? "X" : "O")
-          : // :console.log(firstCollection,'Filed')
+          ? this.showWinner(array[index], index === 0 ? "X" : "O")
+          : //console.log(firstCollection, array[index], index === 0 ? "X" : "O")
+            // :console.log(firstCollection,'Filed')
             null
       );
     }
@@ -79,10 +77,11 @@ class App extends React.Component {
     );
   }
 
+  showWinner(combinationArray, nameWinner) {
+    console.log(combinationArray, nameWinner);
+  }
 
-  render()
-   {
-     
+  render() {
     return (
       <div className="App-container">
         <header>
