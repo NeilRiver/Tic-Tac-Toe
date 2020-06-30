@@ -64,7 +64,7 @@ class App extends React.Component {
       arrSortPos.map((value, index, array) =>
         Array.from(new Set(array[index].concat(firstCollection))).length ===
         array[index].length
-          ? this.showWinner(array[index], index === 0 ? "X" : "O")
+          ? this.showWinner(firstCollection, index === 0 ? "X" : "O")
           : //console.log(firstCollection, array[index], index === 0 ? "X" : "O")
             // :console.log(firstCollection,'Filed')
             null
