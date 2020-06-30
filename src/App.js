@@ -5,25 +5,56 @@ import GameArea from "./components/GameArea/GameArea.js";
 
 class App extends React.Component {
   state = {
-    gameField: [],
-    winnerPosition: [],
+    gameField: new Array(9).fill(null),
+    // prettier-ignore
+    winnerPosition: [
+      0,1,2,
+      3,4,5,
+      6,7,8,
+      0,3,6,
+      1,4,7,
+      2,5,8,
+      0,4,8,
+      2,4,6 ],
     whoWin: [],
+    sortPosition: [[], []],
     whoseStep: true, // true - X   false - O
   };
 
-  componentDidMount() {
-    this.setState({
-      gameField: new Array(9).fill(null),
-      // prettier-ignore
-      whoWin: [0,1,2,
-             3,4,5,
-             6,7,8,
-             0,3,6,
-             1,4,7,
-             2,5,8,
-             0,4,8,
-             2,4,6 ]
+  findWinner(arrCopy) {
+    let arrWinnerPos = JSON.parse(JSON.stringify(this.state.winnerPosition));
+    let arrSortPos = [[], []];
+
+    arrCopy.map((value, index) => {
+      value === "X" && value !== null
+        ? arrSortPos[0].push(index)
+        : value === "O" && value !== null
+        ? arrSortPos[1].push(index)
+        : (() => {})();
     });
+
+    for (let i = 0; i < arrWinnerPos.length; i = i + 3) {
+      let firstCollection = [
+        arrWinnerPos[i],
+        arrWinnerPos[i + 1],
+        arrWinnerPos[i + 2],
+      ];
+
+      arrSortPos.map((value, index, array) =>
+        Array.from(new Set(array[index].concat(firstCollection))).length ===
+        array[index].length
+          ? console.log(firstCollection, array[index], index === 0 ? "X" : "O")
+          : // :console.log(firstCollection,'Filed')
+            null
+      );
+    }
+
+    this.setState(
+      {
+        sortPosition: arrSortPos,
+      },
+      () => console.log(this.state.sortPosition)
+    );
   }
 
   clickInfo(indexElment) {
@@ -40,9 +71,11 @@ class App extends React.Component {
             : value
         ),
         whoseStep: !this.state.whoseStep,
-      },
-      () => console.log(this.state.gameField)
+      }
+      // () => console.log(this.state.gameField)
     );
+
+    return this.findWinner(arrCopy);
   }
 
   render() {
