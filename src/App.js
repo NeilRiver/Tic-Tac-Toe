@@ -21,6 +21,28 @@ class App extends React.Component {
     whoseStep: true, // true - X   false - O
   };
 
+
+  clickInfo(indexElment) {
+    let arrCopy = JSON.parse(JSON.stringify(this.state.gameField));
+
+    console.log(`index = ${indexElment}`);
+    console.log(this.state.whoseStep ? "X" : "O");
+
+    this.setState(
+      {
+        gameField: arrCopy.map((value, index, array) =>
+          index === indexElment
+            ? (value = this.state.whoseStep ? "X" : "O")
+            : value
+        ),
+        whoseStep: !this.state.whoseStep,
+      },
+       () =>  this.findWinner(this.state.gameField)
+    );
+
+   
+  }
+
   findWinner(arrCopy) {
     let arrWinnerPos = JSON.parse(JSON.stringify(this.state.winnerPosition));
     let arrSortPos = [[], []];
@@ -57,28 +79,10 @@ class App extends React.Component {
     );
   }
 
-  clickInfo(indexElment) {
-    let arrCopy = JSON.parse(JSON.stringify(this.state.gameField));
 
-    console.log(`index = ${indexElment}`);
-    console.log(this.state.whoseStep ? "X" : "O");
-
-    this.setState(
-      {
-        gameField: arrCopy.map((value, index, array) =>
-          index === indexElment
-            ? (value = this.state.whoseStep ? "X" : "O")
-            : value
-        ),
-        whoseStep: !this.state.whoseStep,
-      }
-      // () => console.log(this.state.gameField)
-    );
-
-    return this.findWinner(arrCopy);
-  }
-
-  render() {
+  render()
+   {
+     
     return (
       <div className="App-container">
         <header>
