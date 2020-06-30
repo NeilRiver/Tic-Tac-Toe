@@ -1,13 +1,11 @@
 import React from "react";
-//import styles from './WinnerScreen.scss';
+import styles from './WinnerScreen.module.scss';
 const WinnerScreen = (props) => {
-  const styles = {
-    fontFamily: "Bernier Shade",
-    fontSize: "80px",
-  };
+
   return (
-    <div className={WinnerScreen}>
-      <span style={styles}> winner: X</span>
+    <div className={styles.WinnerScreen}>
+      <span > winner: {props.winner}</span>
+      <span > Press screen to continue </span>
     </div>
   );
 };

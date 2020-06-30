@@ -1,9 +1,8 @@
 import React from "react";
-import "./App.scss";
+import styles from "./App.module.scss";
 import Score from "./components/Score/Score.js";
 import GameArea from "./components/GameArea/GameArea.js";
 import WinnerScreen from "./components/WinnerScreen/WinnerScreen.js";
-
 
 class App extends React.Component {
   state = {
@@ -18,7 +17,7 @@ class App extends React.Component {
       2,5,8,
       0,4,8,
       2,4,6 ],
-    whoWin: [],
+    whoWin: null,
     sortPosition: [[], []],
     whoseStep: true, // true - X   false - O
   };
@@ -81,17 +80,20 @@ class App extends React.Component {
 
   showWinner(combinationArray, nameWinner) {
     console.log(combinationArray, nameWinner);
+    this.setState({ whoWin: this.state.whoWin !== null ? null : nameWinner });
   }
 
   render() {
     return (
-      <div className="App-container">
+      <div className={styles.AppContainer}>
         <header>
           <Score className="score" labelName="X" winCount="1" />
           <Score labelName="Tic Tac Toe" />
           <Score className="score" labelName="O" winCount="2" />
         </header>
-        <WinnerScreen/>
+        {this.state.whoWin !== null ? (
+          <WinnerScreen winner={this.state.whoWin} />
+        ) : null}
         <center>
           <GameArea
             gameField={this.state.gameField}

@@ -1,9 +1,9 @@
 import React from "react";
-//import style from "./Score.scss";
+import styles from "./Score.module.scss";
 
 const Score = (props) => {
   return (
-    <span className={props.className}>
+    <span className={props.className === "score" ? styles.score : null}>
       {props.className === props.winCount
         ? props.labelName
         : `${props.labelName}: ${props.winCount}`}
