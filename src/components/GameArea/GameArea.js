@@ -1,9 +1,11 @@
 import React from "react";
-//import style from "./GameArea.scss";
+import styles from "./GameArea.module.scss";
 
 const GameArea = (props) => {
   return props.gameField.map((element, index) => (
-    <div onClick={() => props.clickInfo(index)}>{element}</div>
+    <div className={styles.GameArea} onClick={() => props.clickInfo(index)}>
+      {element}
+    </div>
   ));
 };
 

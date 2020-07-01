@@ -3,13 +3,10 @@
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-
   width: 100%;
   height: 100%;
   background: rgba($color: #000000, $alpha: 0.8);
-
- transition: 3s;
-
+  transition: 3s;
 
   span {
    
