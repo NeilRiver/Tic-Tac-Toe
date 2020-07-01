@@ -19,6 +19,7 @@ class App extends React.Component {
       2,4,6 ],
     whoWin: null,
     sortPosition: [[], []],
+    score: [0, 0],
     whoseStep: true, // true - X   false - O
   };
 
@@ -70,12 +71,9 @@ class App extends React.Component {
       );
     }
 
-    this.setState(
-      {
-        sortPosition: arrSortPos,
-      }
-      //  () => console.log(this.state.sortPosition)
-    );
+    this.setState({
+      sortPosition: arrSortPos,
+    });
   }
 
   showWinner(combinationArray, nameWinner) {
@@ -83,16 +81,42 @@ class App extends React.Component {
     this.setState({ whoWin: this.state.whoWin !== null ? null : nameWinner });
   }
 
+  newGame(nameWinner) {
+    let copyscore = this.state.score;
+    if (nameWinner === "X") {
+      copyscore[0] = copyscore[0] + 1;
+    } else if (nameWinner === "O") {
+      copyscore[1] = copyscore[1] + 1;
+    }
+    this.setState({
+      score: copyscore,
+      whoWin: null,
+      gameField: new Array(9).fill(null),
+      whoseStep: true,
+    });
+  }
+
   render() {
     return (
       <div className={styles.AppContainer}>
         <header>
-          <Score className="score" labelName="X" winCount="1" />
+          <Score
+            className="score"
+            labelName="X"
+            winCount={this.state.score[0]}
+          />
           <Score labelName="Tic Tac Toe" />
-          <Score className="score" labelName="O" winCount="2" />
+          <Score
+            className="score"
+            labelName="O"
+            winCount={this.state.score[1]}
+          />
         </header>
         {this.state.whoWin !== null ? (
-          <WinnerScreen winner={this.state.whoWin} />
+          <WinnerScreen
+            winner={this.state.whoWin}
+            newGame={this.newGame.bind(this)}
+          />
         ) : null}
         <center>
           <GameArea
