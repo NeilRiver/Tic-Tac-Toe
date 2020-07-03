@@ -9,7 +9,6 @@ const WinnerScreen = (props) => {
   console.log(divStyle);
 
   return (
- 
     <div
       style={divStyle}
       className={styles.WinnerScreen}

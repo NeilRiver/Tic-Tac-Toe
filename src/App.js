@@ -113,14 +113,14 @@ class App extends React.Component {
   openWindow() {
     if (this.state.display === "none") {
       this.setState({ display: "flex" });
-      setTimeout(() => this.setState({ opacity: 1, visible: true }), 10);
+      setTimeout(() => this.setState({ opacity: 1, visible: true }), 100);
       clearTimeout();
     }
     if (this.state.display === "flex") {
       this.setState({ opacity: 0, visible: false });
       setTimeout(
         () => this.setState({ display: "none", visible: false, whoWin: null }),
-        400
+        700
       );
       clearTimeout();
     }
