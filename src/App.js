@@ -32,20 +32,19 @@ class App extends React.Component {
     console.log(`index = ${indexElment}`);
     console.log(this.state.whoseStep ? "X" : "O");
 
-    if(arrCopy[indexElment]===null){
-
-    this.setState(
-      {
-        gameField: arrCopy.map((value, index, array) =>
-          index === indexElment
-            ? (value = this.state.whoseStep ? "X" : "O")
-            : value
-        ),
-        whoseStep: !this.state.whoseStep,
-      },
-      () => this.findWinner(this.state.gameField)
-    );
-  }
+    if (arrCopy[indexElment] === null) {
+      this.setState(
+        {
+          gameField: arrCopy.map((value, index, array) =>
+            index === indexElment
+              ? (value = this.state.whoseStep ? "X" : "O")
+              : value
+          ),
+          whoseStep: !this.state.whoseStep,
+        },
+        () => this.findWinner(this.state.gameField)
+      );
+    }
   }
 
   findWinner(arrCopy) {
@@ -91,9 +90,8 @@ class App extends React.Component {
   }
 
   newGame(nameWinner) {
-
-    if (this.state.opacity === 0){
-      return
+    if (this.state.opacity === 0) {
+      return;
     }
 
     let copyscore = this.state.score;
@@ -116,6 +114,7 @@ class App extends React.Component {
     if (this.state.display === "none") {
       this.setState({ display: "flex" });
       setTimeout(() => this.setState({ opacity: 1, visible: true }), 10);
+      clearTimeout();
     }
     if (this.state.display === "flex") {
       this.setState({ opacity: 0, visible: false });
@@ -123,6 +122,7 @@ class App extends React.Component {
         () => this.setState({ display: "none", visible: false, whoWin: null }),
         400
       );
+      clearTimeout();
     }
   }
 
