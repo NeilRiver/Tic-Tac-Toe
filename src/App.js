@@ -21,6 +21,9 @@ class App extends React.Component {
     sortPosition: [[], []],
     score: [0, 0],
     whoseStep: true, // true - X   false - O
+    //----------------------------------------------
+    display: "none",
+    opacity: 0
   };
 
   clickInfo(indexElment) {
@@ -78,8 +81,9 @@ class App extends React.Component {
 
   showWinner(combinationArray, nameWinner) {
     console.log(combinationArray, nameWinner);
-    this.setState({ whoWin: this.state.whoWin !== null ? null : nameWinner });
-  }
+    this.setState({ whoWin: this.state.whoWin !== null ? null : nameWinner },
+      ()=>this.openWindow());
+    }
 
   newGame(nameWinner) {
     let copyscore = this.state.score;
@@ -90,11 +94,28 @@ class App extends React.Component {
     }
     this.setState({
       score: copyscore,
-      whoWin: null,
       gameField: new Array(9).fill(null),
       whoseStep: true,
-    });
+    },()=>this.openWindow());
   }
+
+
+  openWindow() {
+    if (this.state.display === "none") {
+      this.setState({ display: "flex" });
+      setTimeout(() => this.setState({ opacity: 1, visible: true }), 10);
+    }
+    if (this.state.display === "flex") {
+      this.setState({ opacity: 0, visible: false });
+      setTimeout(
+        () => this.setState({ display: "none", visible: false , whoWin: null,}),
+        1200
+      );
+    }
+  }
+
+
+
 
   render() {
     return (
@@ -112,12 +133,16 @@ class App extends React.Component {
             winCount={this.state.score[1]}
           />
         </header>
+
         {this.state.whoWin !== null ? (
           <WinnerScreen
             winner={this.state.whoWin}
             newGame={this.newGame.bind(this)}
+            display={this.state.display}
+            opacity={this.state.opacity}
           />
         ) : null}
+
         <center>
           <GameArea
             gameField={this.state.gameField}
