@@ -23,7 +23,7 @@ class App extends React.Component {
     whoseStep: true, // true - X   false - O
     //----------------------------------------------
     display: "none",
-    opacity: 0
+    opacity: 0,
   };
 
   clickInfo(indexElment) {
@@ -31,6 +31,8 @@ class App extends React.Component {
 
     console.log(`index = ${indexElment}`);
     console.log(this.state.whoseStep ? "X" : "O");
+
+    if(arrCopy[indexElment]===null){
 
     this.setState(
       {
@@ -43,6 +45,7 @@ class App extends React.Component {
       },
       () => this.findWinner(this.state.gameField)
     );
+  }
   }
 
   findWinner(arrCopy) {
@@ -81,24 +84,33 @@ class App extends React.Component {
 
   showWinner(combinationArray, nameWinner) {
     console.log(combinationArray, nameWinner);
-    this.setState({ whoWin: this.state.whoWin !== null ? null : nameWinner },
-      ()=>this.openWindow());
-    }
+    this.setState(
+      { whoWin: this.state.whoWin !== null ? null : nameWinner },
+      () => this.openWindow()
+    );
+  }
 
   newGame(nameWinner) {
+
+    if (this.state.opacity === 0){
+      return
+    }
+
     let copyscore = this.state.score;
     if (nameWinner === "X") {
       copyscore[0] = copyscore[0] + 1;
     } else if (nameWinner === "O") {
       copyscore[1] = copyscore[1] + 1;
     }
-    this.setState({
-      score: copyscore,
-      gameField: new Array(9).fill(null),
-      whoseStep: true,
-    },()=>this.openWindow());
+    this.setState(
+      {
+        score: copyscore,
+        gameField: new Array(9).fill(null),
+        whoseStep: true,
+      },
+      () => this.openWindow()
+    );
   }
-
 
   openWindow() {
     if (this.state.display === "none") {
@@ -108,14 +120,11 @@ class App extends React.Component {
     if (this.state.display === "flex") {
       this.setState({ opacity: 0, visible: false });
       setTimeout(
-        () => this.setState({ display: "none", visible: false , whoWin: null,}),
-        1200
+        () => this.setState({ display: "none", visible: false, whoWin: null }),
+        400
       );
     }
   }
-
-
-
 
   render() {
     return (
