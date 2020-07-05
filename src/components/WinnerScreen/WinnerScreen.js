@@ -6,7 +6,7 @@ const WinnerScreen = (props) => {
     opacity: props.opacity,
     transition: "opacity 0.7s ease",
   };
-  console.log(divStyle);
+//  console.log(divStyle);
 
   return (
     <div

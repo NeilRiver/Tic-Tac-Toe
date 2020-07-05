@@ -6,9 +6,8 @@ import WinnerScreen from "./components/WinnerScreen/WinnerScreen.js";
 
 class App extends React.Component {
   state = {
-    gameField: ["O", "O", "X", "X", "X", "O", null, "X", "O"],
-    // gameField:[null,null,'X',null,'X',null,null,null,'X'],
-    //gameField: new Array(9).fill(null),
+    //gameField: ["O", "O", "X", "X", "X", "O", null, "X", "O"],
+    gameField: new Array(9).fill(null),
     // prettier-ignore
     winnerPosition: [
       0,1,2,
@@ -31,8 +30,8 @@ class App extends React.Component {
   clickInfo(indexElment) {
     let arrCopy = JSON.parse(JSON.stringify(this.state.gameField));
 
-    console.log(`index = ${indexElment}`);
-    console.log(this.state.whoseStep ? "X" : "O");
+    // console.log(`index = ${indexElment}`);
+    // console.log(this.state.whoseStep ? "X" : "O");
 
     if (arrCopy[indexElment] === null) {
       this.setState(
@@ -70,9 +69,9 @@ class App extends React.Component {
         arrWinnerPos[i + 2],
       ];
 
-      console.log(firstCollection);
+      //console.log(firstCollection);
       arrSortPos.forEach((value, index, array) => {
-        console.log(firstCollection, array[index], index === 0 ? "X" : "O");
+        // console.log(firstCollection, array[index], index === 0 ? "X" : "O");
         // :console.log(firstCollection,'Filed')
 
         if (stop) {
@@ -80,14 +79,14 @@ class App extends React.Component {
             Array.from(new Set(array[index].concat(firstCollection))).length ===
             array[index].length
           ) {
-            console.log("WINNER");
+            // console.log("WINNER");
             this.showWinner(firstCollection, index === 0 ? "X" : "O");
             stop = false;
           } else if (arrCopy.every((e) => e !== null)) {
             if (t === 0) {
-              console.log("LOSSER");
-              console.log(arrCopy);
-              console.log(arrSortPos);
+              //  console.log("LOSSER");
+              //  console.log(arrCopy);
+              //  console.log(arrSortPos);
               this.showWinner("No winner", "A Draw :(");
               t = 1;
             }
@@ -113,7 +112,7 @@ class App extends React.Component {
   }
 
   showWinner(combinationArray, nameWinner) {
-    console.log(combinationArray, nameWinner);
+    //   console.log(combinationArray, nameWinner);
     this.setState(
       { whoWin: this.state.whoWin !== null ? null : nameWinner },
       () => this.openWindow()
@@ -131,7 +130,7 @@ class App extends React.Component {
     } else if (nameWinner === "O") {
       copyscore[1] = copyscore[1] + 1;
     } else if (nameWinner.length > 3) {
-      console.log("no WINNER");
+      //   console.log("no WINNER");
     }
     this.setState(
       {
