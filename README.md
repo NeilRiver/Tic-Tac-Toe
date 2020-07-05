@@ -1,4 +1,4 @@
-## If you wanna show this project pls into to url 
+## If you wanna look this project pls into to url 
 
 https://neilriver.github.io/Tic-Tac-Toe/
 
