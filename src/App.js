@@ -6,7 +6,9 @@ import WinnerScreen from "./components/WinnerScreen/WinnerScreen.js";
 
 class App extends React.Component {
   state = {
-    gameField: new Array(9).fill(null),
+    gameField: ["O", "O", "X", "X", "X", "O", null, "X", "O"],
+    // gameField:[null,null,'X',null,'X',null,null,null,'X'],
+    //gameField: new Array(9).fill(null),
     // prettier-ignore
     winnerPosition: [
       0,1,2,
@@ -50,6 +52,8 @@ class App extends React.Component {
   findWinner(arrCopy) {
     let arrWinnerPos = JSON.parse(JSON.stringify(this.state.winnerPosition));
     let arrSortPos = [[], []];
+    let stop = true;
+    let t = 0;
 
     arrCopy.map((value, index) => {
       value === "X" && value !== null
@@ -66,14 +70,41 @@ class App extends React.Component {
         arrWinnerPos[i + 2],
       ];
 
-      arrSortPos.map((value, index, array) =>
-        Array.from(new Set(array[index].concat(firstCollection))).length ===
-        array[index].length
-          ? this.showWinner(firstCollection, index === 0 ? "X" : "O")
-          : //console.log(firstCollection, array[index], index === 0 ? "X" : "O")
-            // :console.log(firstCollection,'Filed')
-            null
-      );
+      console.log(firstCollection);
+      arrSortPos.forEach((value, index, array) => {
+        console.log(firstCollection, array[index], index === 0 ? "X" : "O");
+        // :console.log(firstCollection,'Filed')
+
+        if (stop) {
+          if (
+            Array.from(new Set(array[index].concat(firstCollection))).length ===
+            array[index].length
+          ) {
+            console.log("WINNER");
+            this.showWinner(firstCollection, index === 0 ? "X" : "O");
+            stop = false;
+          } else if (arrCopy.every((e) => e !== null)) {
+            if (t === 0) {
+              console.log("LOSSER");
+              console.log(arrCopy);
+              console.log(arrSortPos);
+              this.showWinner("No winner", "A Draw :(");
+              t = 1;
+            }
+          }
+        }
+      });
+
+      // arrSortPos.map((value, index, array) =>
+      //   Array.from(new Set(array[index].concat(firstCollection))).length ===
+      //   array[index].length
+      //     ? this.showWinner(firstCollection, index === 0 ? "X" : "O")
+      //     : //console.log(firstCollection, array[index], index === 0 ? "X" : "O")
+      //       // :console.log(firstCollection,'Filed')
+      //       // (arrCopy.every(e=>e !== null)==true)? this.showWinner('No winner','A Draw :('):null
+      //       null
+
+      // );
     }
 
     this.setState({
@@ -99,6 +130,8 @@ class App extends React.Component {
       copyscore[0] = copyscore[0] + 1;
     } else if (nameWinner === "O") {
       copyscore[1] = copyscore[1] + 1;
+    } else if (nameWinner.length > 3) {
+      console.log("no WINNER");
     }
     this.setState(
       {
